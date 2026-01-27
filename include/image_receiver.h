@@ -41,6 +41,7 @@ struct ReceiverConfig {
     int max_buffers = 3;
     int width = 1920;           // Video width
     int height = 1280;          // Video height
+    int verbose = false;        // verbose log
     SinkMode mode = SinkMode::RAW_AND_JPEG;
 };
 

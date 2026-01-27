@@ -77,6 +77,7 @@ def generate_launch_description():
                 'frame_id': LaunchConfiguration('frame_id'),
                 'width': LaunchConfiguration('width'),
                 'height': LaunchConfiguration('height'),
+                'verbose': LaunchConfiguration('verbose'),
                 'camera_info_url': LaunchConfiguration('camera_info_url'),
             }],
             output='screen',

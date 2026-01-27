@@ -45,6 +45,7 @@ public:
         this->declare_parameter("max_buffers", 3);
         this->declare_parameter("width", 1920);
         this->declare_parameter("height", 1280);
+        this->declare_parameter("verbose", false);
         this->declare_parameter("publish_raw", false);
         this->declare_parameter("publish_compressed", true);
         this->declare_parameter("frame_id", "camera");
@@ -56,6 +57,7 @@ public:
         int max_buffers = this->get_parameter("max_buffers").as_int();
         int width = this->get_parameter("width").as_int();
         int height = this->get_parameter("height").as_int();
+        bool verbose = this->get_parameter("verbose").as_bool();
         publish_raw_ = this->get_parameter("publish_raw").as_bool();
         publish_compressed_ = this->get_parameter("publish_compressed").as_bool();
         frame_id_ = this->get_parameter("frame_id").as_string();
@@ -69,6 +71,7 @@ public:
         config.max_buffers = max_buffers;
         config.width = width;
         config.height = height;
+        config.verbose = verbose;
 
         // sink mode selection
         if (publish_raw_ && publish_compressed_){
@@ -145,6 +148,7 @@ public:
         // display Node information
         RCLCPP_INFO(this->get_logger(), "RTP Image Receiver Node started on UDP port %d", udp_port);
         RCLCPP_INFO(this->get_logger(), "Resolution: %dx%d", width, height);
+        RCLCPP_INFO(this->get_logger(), "Log Verbose: %s", verbose ? "True" : "False");
         RCLCPP_INFO(this->get_logger(), "Publishing: raw=%s, compressed=%s", 
                     publish_raw_ ? "true" : "false",
                     publish_compressed_ ? "true" : "false");
@@ -173,27 +177,24 @@ private:
 
     // Raw image publishing helper
     void publishRaw(const uint8_t* data, size_t size, const std_msgs::msg::Header& header) {
-        if (publish_raw_ && raw_pub_->get_subscription_count() > 0) { 
+        if (config_.verbose || (publish_raw_ && raw_pub_->get_subscription_count() > 0)) { 
             cv::Mat bgr_image(config_.height, config_.width, CV_8UC3, (void*)data);
-
             sensor_msgs::msg::Image::SharedPtr image_msg = 
                 cv_bridge::CvImage(header, "bgr8", bgr_image).toImageMsg();
-            RCLCPP_INFO(this->get_logger(), "Publish Image topic          : %09u.%09u", header.stamp.sec, header.stamp.nanosec);
-
             raw_pub_->publish(*image_msg);
+            RCLCPP_INFO(this->get_logger(), "Publish Image...Timestamp: %09u.%09u", header.stamp.sec, header.stamp.nanosec);
         }
     }
 
     // Compressed image publishing helper
     void publishCompressed(const uint8_t* data, size_t size, const std_msgs::msg::Header& header) {
-        if (publish_compressed_ && compressed_pub_->get_subscription_count() > 0) {
+        if (config_.verbose || (publish_compressed_ && compressed_pub_->get_subscription_count() > 0)) {
             auto compressed_msg = std::make_unique<sensor_msgs::msg::CompressedImage>();
             compressed_msg->header = header;
             compressed_msg->format = "jpeg";
             compressed_msg->data.assign(data, data + size);
-            
             compressed_pub_->publish(std::move(compressed_msg));
-            RCLCPP_INFO(this->get_logger(), "Publish CompressedImage topic: %09u.%09u", header.stamp.sec, header.stamp.nanosec);
+            RCLCPP_INFO(this->get_logger(), "Publish CompressedImage...Timestamp: %09u.%09u", header.stamp.sec, header.stamp.nanosec);
         }
     }
 
