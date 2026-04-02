@@ -1,5 +1,20 @@
 {
   "ignorePaths": [".cppcheck_suppressions"],
   "ignoreRegExpList": [],
-  "words": []
+  "words": [
+    "CFLAGS",
+    "DJETSON",
+    "NVMM",
+    "VAAPI",
+    "gpointer",
+    "guint",
+    "idct",
+    "imagereceiver",
+    "nvjpegenc",
+    "nvvidconv",
+    "rtpidentity",
+    "rtpvrawdepay",
+    "vaapijpegenc",
+    "vaapipostproc"
+  ]
 }

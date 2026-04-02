@@ -1,12 +1,12 @@
-# ROS2 RTP Image Receiver Node via Gstreamer
+# ROS 2 RTP Image Receiver Node via Gstreamer
 
-ROS2 node for processing real-time video streams from UDP/RTP sources. This node is designed to handle YCbCr 4:2:2 format video, convert it to BGR for display, and then compress it into JPEG format. It leverages hardware acceleration (VA-API, NVIDIA, Jetson) for optimal performance.
+ROS 2 node for processing real-time video streams from UDP/RTP sources. This node is designed to handle YCbCr 4:2:2 format video, convert it to BGR for display, and then compress it into JPEG format. It leverages hardware acceleration (VA-API, NVIDIA, Jetson) for optimal performance.
 
 ## 🚀 Features
 
 Hardware-accelerated video processing for high-speed performance.
 Publishes both raw and compressed image topics.
-All settings are configurable via ROS2 parameters.
+All settings are configurable via ROS 2 parameters.
 Real-time performance metrics and debugging information.
 
 ## ⚡️ Topics
@@ -32,10 +32,10 @@ Real-time performance metrics and debugging information.
 
 ### Prerequisites
 
-You'll need to install the necessary ROS2 and GStreamer dependencies.
+You'll need to install the necessary ROS 2 and GStreamer dependencies.
 
 ```
-# Install ROS2 dependencies
+# Install ROS 2 dependencies
 sudo apt install ros-humble-cv-bridge ros-humble-image-transport ros-humble-compressed-image-transport
 
 # Install GStreamer dependencies
@@ -55,7 +55,7 @@ sudo apt install libopencv-dev
 Navigate to your workspace and build the package.
 
 ```
-# Source ROS2
+# Source ROS 2
 source /opt/ros/humble/setup.bash
 
 #Build the package
@@ -86,7 +86,7 @@ ros2 run gst_rtp_image_receiver rtp_image_receiver_node --ros-args \
 
 ### Using launch files
 
-The node can also be launched using ROS2 launch files for easier configuration.
+The node can also be launched using ROS 2 launch files for easier configuration.
 
 - Example with a Python launch file
 
@@ -127,7 +127,7 @@ Use `rqt_image_view` to subscribe to the published topics and display the images
 
 ### Monitor topics
 
-You can use standard ROS2 CLI tools to monitor the published topics.
+You can use standard ROS 2 CLI tools to monitor the published topics.
 
 ```
 # List all active topics

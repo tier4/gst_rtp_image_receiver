@@ -10,7 +10,7 @@ if(EXISTS "/etc/nv_tegra_release")
     add_definitions(-DJETSON_PLATFORM)
 endif()
 
-# Find ROS2 packages
+# Find ROS 2 packages
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
@@ -52,7 +52,7 @@ target_link_libraries(imagereceiver
 
 target_compile_options(imagereceiver PRIVATE ${GST_CFLAGS_OTHER})
 
-# ROS2 Component library
+# ROS 2 Component library
 add_library(rtp_image_receiver_component SHARED
     src/rtp_image_receiver_node.cpp
 )
