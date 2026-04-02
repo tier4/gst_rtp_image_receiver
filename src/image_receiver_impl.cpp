@@ -640,14 +640,14 @@ private:
                     rtp_ts.csrc = gst_rtp_buffer_get_csrc(&rtp, 0);
                 }
                 
-                // Reconstruct 96-bit custom timestamp according to the custom RTP spec:
+                // Reconstruct 96-bit custom timestamp according to TIER IV documentation:
                 // - RTP timestamp (32 bits): High 32 bits of seconds
                 // - SSRC (32 bits): Low 16 bits of seconds + High 16 bits of nanoseconds
                 // - CSRC (32 bits): Low 16 bits of nanoseconds + 16 bits fractions
                 
                 if (csrc_count > 0) {
                     // Full custom timestamp is available (96-bit total)
-                    // According to the custom RTP spec:
+                    // According to TIER IV documentation:
                     // - Bits [95:48] (48 bits): Seconds
                     // - Bits [47:16] (32 bits): Nanoseconds  
                     // - Bits [15:0] (16 bits): Fractions of nanoseconds
