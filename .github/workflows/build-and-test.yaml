@@ -22,7 +22,15 @@ jobs:
             build-depends-repos: build_depends.repos
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Install GStreamer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgstreamer1.0-dev \
+            libgstreamer-plugins-base1.0-dev \
+            gstreamer1.0-plugins-bad
 
       - name: Remove exec_depend
         uses: autowarefoundation/autoware-github-actions/remove-exec-depend@v1
@@ -50,7 +58,7 @@ jobs:
 
       - name: Upload coverage to CodeCov
         if: ${{ steps.test.outputs.coverage-report-files != '' }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ${{ steps.test.outputs.coverage-report-files }}
           fail_ci_if_error: false

@@ -213,7 +213,7 @@ private:
             "identity name=rtpidentity ! "
             "rtpvrawdepay ";
 
-        // raw pipelne
+        // raw pipeline
         std::string raw_pipeline;
         if (hw_type_ == HardwareType::NVIDIA_DESKTOP || hw_type_ == HardwareType::NVIDIA_JETSON) {
             // Use nvvidconv for hardware-accelerated YUV -> BGRx conversion
@@ -640,14 +640,14 @@ private:
                     rtp_ts.csrc = gst_rtp_buffer_get_csrc(&rtp, 0);
                 }
                 
-                // Reconstruct 96-bit custom timestamp according to Tier4 documentation:
+                // Reconstruct 96-bit custom timestamp according to the custom RTP spec:
                 // - RTP timestamp (32 bits): High 32 bits of seconds
                 // - SSRC (32 bits): Low 16 bits of seconds + High 16 bits of nanoseconds
                 // - CSRC (32 bits): Low 16 bits of nanoseconds + 16 bits fractions
                 
                 if (csrc_count > 0) {
                     // Full custom timestamp is available (96-bit total)
-                    // According to Tier4 documentation:
+                    // According to the custom RTP spec:
                     // - Bits [95:48] (48 bits): Seconds
                     // - Bits [47:16] (32 bits): Nanoseconds  
                     // - Bits [15:0] (16 bits): Fractions of nanoseconds

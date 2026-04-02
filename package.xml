@@ -3,7 +3,7 @@
 <package format="3">
   <name>gst_rtp_image_receiver</name>
   <version>1.0.0</version>
-  <description>ROS2 node for real-time image processing from RTP/UDP streams</description>
+  <description>ROS 2 node for real-time image processing from RTP/UDP streams</description>
   <maintainer email="your_email@example.com">Your Name</maintainer>
   <license>Apache-2.0</license>
 
